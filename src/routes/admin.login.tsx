@@ -64,7 +64,7 @@ function AdminLogin() {
             {loading ? "Signing in…" : "Sign In"}
           </button>
         </form>
-        <p className="text-xs text-muted-foreground text-center mt-6"><Link to="/" className="hover:text-primary">← Back to store</Link></p>
+       
       </div>
     </div>
   );

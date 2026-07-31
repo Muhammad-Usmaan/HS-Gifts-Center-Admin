@@ -139,19 +139,6 @@ function AdminsPage() {
             </button>
           </form>
 
-          <div className="mt-4 p-3 bg-amber-50 border border-amber-200 rounded-lg text-xs text-amber-800 space-y-1">
-            <p className="font-semibold flex items-center gap-1.5">
-              <AlertCircle className="w-3.5 h-3.5" />
-              Requirements for invite email to work:
-            </p>
-            <ol className="list-decimal list-inside space-y-1 ml-1">
-              <li>Add <code className="bg-amber-100 px-1 rounded">SUPABASE_SERVICE_ROLE_KEY</code> to your <code className="bg-amber-100 px-1 rounded">.env</code> file</li>
-              <li>Get it from: Supabase Dashboard → Project → Settings → API → <strong>service_role secret</strong></li>
-              <li>Also add it to Vercel Environment Variables for production</li>
-            </ol>
-          </div>
-        </div>
-
         {/* Current Admins List */}
         <div className="bg-card border border-border rounded-xl p-6">
           <div className="flex items-center gap-2 mb-5">
@@ -219,26 +206,6 @@ function AdminsPage() {
               ))}
             </div>
           )}
-        </div>
-
-        {/* How to add yourself manually note */}
-        <div className="bg-blue-50 border border-blue-200 rounded-xl p-5 text-sm text-blue-900">
-          <p className="font-semibold mb-2 flex items-center gap-2">
-            <ShieldCheck className="w-4 h-4" />
-            Quick Fix: Add yourself as admin right now
-          </p>
-          <p className="text-xs text-blue-800 mb-3">
-            If you created a user in Supabase but they show "not admin", run this SQL in your Supabase dashboard:
-          </p>
-          <pre className="bg-blue-100 rounded-lg p-3 text-xs font-mono overflow-x-auto text-blue-900">
-{`-- Go to Supabase Dashboard → SQL Editor and run:
-INSERT INTO user_roles (user_id, role)
-VALUES (
-  (SELECT id FROM auth.users WHERE email = 'your@email.com'),
-  'admin'
-)
-ON CONFLICT DO NOTHING;`}
-          </pre>
         </div>
       </div>
     </>
