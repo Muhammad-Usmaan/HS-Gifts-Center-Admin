@@ -138,6 +138,7 @@ function AdminsPage() {
               {inviting ? "Sending…" : "Send Invite"}
             </button>
           </form>
+        </div>
 
         {/* Current Admins List */}
         <div className="bg-card border border-border rounded-xl p-6">
