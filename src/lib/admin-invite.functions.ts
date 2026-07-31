@@ -27,9 +27,14 @@ export const inviteAdmin = createServerFn({ method: "POST" })
       // User exists — just grant admin role (they may already have an account)
     } else {
       // 2. Send an invite email via Supabase Auth Admin API
+      // Since it runs server-side, we construct the redirect URI using the host domain config.
+      const redirectUri = process.env.VITE_SUPABASE_URL 
+        ? `${process.env.VITE_SUPABASE_URL.replace("https://", "https://admin.").replace(".supabase.co", ".vercel.app")}/admin/login`
+        : "http://localhost:3000/admin/login";
+
       const { data: invited, error: invErr } =
         await supabaseAdmin.auth.admin.inviteUserByEmail(data.email, {
-          redirectTo: `${process.env.SUPABASE_URL?.replace("supabase.co", "") ?? ""}admin/login`,
+          redirectTo: redirectUri,
         });
       if (invErr) throw new Error("Failed to send invite: " + invErr.message);
       userId = invited.user.id;

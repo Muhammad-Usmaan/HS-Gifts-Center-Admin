@@ -18,6 +18,16 @@ function AdminLogin() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    // Check if the URL contains access_token from invite/recovery link
+    const hash = window.location.hash;
+    if (hash && (hash.includes("access_token=") || hash.includes("type=invite") || hash.includes("type=recovery"))) {
+      // Allow supabase auth client to parse the hash and set session
+      setTimeout(() => {
+        navigate({ to: "/admin/reset-password" });
+      }, 500);
+      return;
+    }
+
     supabase.auth.getUser().then(({ data }) => {
       if (data.user) navigate({ to: "/admin" });
     });
