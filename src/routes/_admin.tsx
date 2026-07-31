@@ -1,7 +1,7 @@
 import { createFileRoute, Outlet, redirect, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { Gift, LayoutDashboard, Package, FolderTree, ShoppingCart, LogOut, Star, Settings, Users } from "lucide-react";
+import { Gift, LayoutDashboard, Package, FolderTree, ShoppingCart, LogOut, Star, Settings } from "lucide-react";
 import { toast, Toaster } from "sonner";
 
 export const Route = createFileRoute("/_admin")({
@@ -98,7 +98,6 @@ function AdminLayout() {
           <NavLink to="/admin/categories" icon={FolderTree} label="Categories" />
           <NavLink to="/admin/reviews" icon={Star} label="Reviews" />
           <NavLink to="/admin/settings" icon={Settings} label="Site Settings" />
-          <NavLink to="/admin/admins" icon={Users} label="Admins" />
         </nav>
         <button onClick={logout} className="flex items-center gap-2 text-sm text-muted-foreground hover:text-destructive mt-4 pt-4 border-t border-border">
           <LogOut className="w-4 h-4" /> Sign Out
