@@ -6,6 +6,7 @@ export const STOCK_STATUSES = ["in_stock", "low_stock", "out_of_stock"] as const
 
 export const SETTINGS_FIELDS = [
   { key: "logo_url", label: "Logo URL", type: "logo" as const },
+  { key: "favicon_url", label: "Favicon URL", type: "logo" as const },
   { key: "announcement", label: "Top Announcement Bar", type: "text" as const },
   { key: "hero_heading", label: "Hero Heading", type: "text" as const },
   { key: "hero_description", label: "Hero Description", type: "textarea" as const },
@@ -15,6 +16,8 @@ export const SETTINGS_FIELDS = [
   { key: "whatsapp_default_message", label: "WhatsApp Default Message", type: "textarea" as const },
   { key: "business_email", label: "Business Email", type: "text" as const },
   { key: "business_address", label: "Business Address", type: "text" as const },
+  { key: "business_hours_weekdays", label: "Business Hours (Mon-Sat)", type: "text" as const },
+  { key: "business_hours_sunday", label: "Business Hours (Sunday)", type: "text" as const },
   { key: "delivery_fee", label: "Delivery Fee (PKR)", type: "text" as const },
   { key: "instagram_url", label: "Instagram URL", type: "text" as const },
   { key: "instagram_handle", label: "Instagram Handle", type: "text" as const },

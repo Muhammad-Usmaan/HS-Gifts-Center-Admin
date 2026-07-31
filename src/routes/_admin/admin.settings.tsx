@@ -11,7 +11,7 @@ export const Route = createFileRoute("/_admin/admin/settings")({
 
 const SETTING_GROUPS = [
   { title: "Logo & Branding", icon: Image, keys: ["announcement", "hero_heading", "hero_description", "footer_description"] },
-  { title: "Contact Info", icon: Phone, keys: ["whatsapp_number", "whatsapp_display", "whatsapp_default_message", "business_email", "business_address"] },
+  { title: "Contact Info", icon: Phone, keys: ["whatsapp_number", "whatsapp_display", "whatsapp_default_message", "business_email", "business_address", "business_hours_weekdays", "business_hours_sunday"] },
   { title: "Delivery", icon: Truck, keys: ["delivery_fee"] },
   { title: "Instagram", icon: Instagram, keys: ["instagram_url", "instagram_handle"] },
   { title: "Facebook", icon: Facebook, keys: ["facebook_url", "facebook_handle"] },
@@ -52,6 +52,20 @@ function SettingsAdmin() {
     } finally { setUploading(false); }
   }
 
+  async function handleFaviconUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploading(true);
+    try {
+      const url = await uploadSiteAsset(file);
+      setSettings((s) => ({ ...s, favicon_url: url }));
+      await upsertSetting("favicon_url", url);
+      toast.success("Favicon uploaded successfully");
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Upload failed");
+    } finally { setUploading(false); }
+  }
+
   if (loading) return <div className="flex items-center gap-2 text-muted-foreground p-8"><div className="w-4 h-4 border-2 border-primary border-t-transparent rounded-full animate-spin" />Loading settings…</div>;
 
   return (
@@ -67,9 +81,10 @@ function SettingsAdmin() {
         </button>
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Logo section */}
-        <div className="lg:col-span-1">
-          <div className="bg-card border border-border rounded-xl p-5 sticky top-6">
+        {/* Assets section */}
+        <div className="lg:col-span-1 space-y-5">
+          {/* Logo Card */}
+          <div className="bg-card border border-border rounded-xl p-5">
             <h2 className="font-serif text-base font-semibold mb-4">Logo</h2>
             <div className="flex flex-col items-center gap-4">
               <div className="w-full h-32 bg-muted/30 rounded-lg flex items-center justify-center overflow-hidden border border-border">
@@ -86,6 +101,28 @@ function SettingsAdmin() {
               <div className="w-full">
                 <label className="text-xs text-muted-foreground">Or enter URL directly</label>
                 <input type="text" value={settings.logo_url ?? ""} onChange={(e) => setSettings((s) => ({ ...s, logo_url: e.target.value }))} className="w-full mt-1 px-3 py-2 border border-border rounded-lg bg-background text-sm" placeholder="https://..." />
+              </div>
+            </div>
+          </div>
+
+          {/* Favicon Card */}
+          <div className="bg-card border border-border rounded-xl p-5">
+            <h2 className="font-serif text-base font-semibold mb-4">Favicon</h2>
+            <div className="flex flex-col items-center gap-4">
+              <div className="w-full h-24 bg-muted/30 rounded-lg flex items-center justify-center overflow-hidden border border-border">
+                {settings.favicon_url
+                  ? <img src={settings.favicon_url} alt="Site favicon" className="w-12 h-12 object-contain" />
+                  : <p className="text-xs text-muted-foreground">No favicon set</p>
+                }
+              </div>
+              <label className="w-full flex items-center justify-center gap-2 px-4 py-2.5 border border-border rounded-lg cursor-pointer hover:bg-accent text-sm font-medium transition-colors">
+                <Upload className="w-4 h-4" />
+                {uploading ? "Uploading…" : "Upload Favicon"}
+                <input type="file" accept="image/x-icon,image/png,image/svg+xml" className="hidden" onChange={handleFaviconUpload} disabled={uploading} />
+              </label>
+              <div className="w-full">
+                <label className="text-xs text-muted-foreground">Or enter URL directly</label>
+                <input type="text" value={settings.favicon_url ?? ""} onChange={(e) => setSettings((s) => ({ ...s, favicon_url: e.target.value }))} className="w-full mt-1 px-3 py-2 border border-border rounded-lg bg-background text-sm" placeholder="https://..." />
               </div>
             </div>
           </div>
