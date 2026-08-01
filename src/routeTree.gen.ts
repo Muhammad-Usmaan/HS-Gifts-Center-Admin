@@ -14,7 +14,6 @@ import { Route as AdminRouteImport } from './routes/_admin'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as AdminLoginRouteImport } from './routes/admin.login'
 import { Route as AdminAdminIndexRouteImport } from './routes/_admin/admin.index'
-import { Route as AdminAdminAdminsRouteImport } from './routes/_admin/admin.admins'
 import { Route as AdminAdminCategoriesRouteImport } from './routes/_admin/admin.categories'
 import { Route as AdminAdminOrdersRouteImport } from './routes/_admin/admin.orders'
 import { Route as AdminAdminProductsRouteImport } from './routes/_admin/admin.products'
@@ -43,11 +42,6 @@ const AdminLoginRoute = AdminLoginRouteImport.update({
 const AdminAdminIndexRoute = AdminAdminIndexRouteImport.update({
   id: '/admin/',
   path: '/admin/',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminAdminAdminsRoute = AdminAdminAdminsRouteImport.update({
-  id: '/admin/admins',
-  path: '/admin/admins',
   getParentRoute: () => AdminRoute,
 } as any)
 const AdminAdminCategoriesRoute = AdminAdminCategoriesRouteImport.update({
@@ -80,7 +74,6 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/admin/login': typeof AdminLoginRoute
-  '/admin/admins': typeof AdminAdminAdminsRoute
   '/admin/categories': typeof AdminAdminCategoriesRoute
   '/admin/orders': typeof AdminAdminOrdersRoute
   '/admin/products': typeof AdminAdminProductsRoute
@@ -92,7 +85,6 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/admin/login': typeof AdminLoginRoute
-  '/admin/admins': typeof AdminAdminAdminsRoute
   '/admin/categories': typeof AdminAdminCategoriesRoute
   '/admin/orders': typeof AdminAdminOrdersRoute
   '/admin/products': typeof AdminAdminProductsRoute
@@ -106,7 +98,6 @@ export interface FileRoutesById {
   '/_admin': typeof AdminRouteWithChildren
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/admin/login': typeof AdminLoginRoute
-  '/_admin/admin/admins': typeof AdminAdminAdminsRoute
   '/_admin/admin/categories': typeof AdminAdminCategoriesRoute
   '/_admin/admin/orders': typeof AdminAdminOrdersRoute
   '/_admin/admin/products': typeof AdminAdminProductsRoute
@@ -120,7 +111,6 @@ export interface FileRouteTypes {
     | '/'
     | '/sitemap.xml'
     | '/admin/login'
-    | '/admin/admins'
     | '/admin/categories'
     | '/admin/orders'
     | '/admin/products'
@@ -132,7 +122,6 @@ export interface FileRouteTypes {
     | '/'
     | '/sitemap.xml'
     | '/admin/login'
-    | '/admin/admins'
     | '/admin/categories'
     | '/admin/orders'
     | '/admin/products'
@@ -145,7 +134,6 @@ export interface FileRouteTypes {
     | '/_admin'
     | '/sitemap.xml'
     | '/admin/login'
-    | '/_admin/admin/admins'
     | '/_admin/admin/categories'
     | '/_admin/admin/orders'
     | '/_admin/admin/products'
@@ -198,13 +186,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminAdminIndexRouteImport
       parentRoute: typeof AdminRoute
     }
-    '/_admin/admin/admins': {
-      id: '/_admin/admin/admins'
-      path: '/admin/admins'
-      fullPath: '/admin/admins'
-      preLoaderRoute: typeof AdminAdminAdminsRouteImport
-      parentRoute: typeof AdminRoute
-    }
     '/_admin/admin/categories': {
       id: '/_admin/admin/categories'
       path: '/admin/categories'
@@ -244,7 +225,6 @@ declare module '@tanstack/react-router' {
 }
 
 interface AdminRouteChildren {
-  AdminAdminAdminsRoute: typeof AdminAdminAdminsRoute
   AdminAdminCategoriesRoute: typeof AdminAdminCategoriesRoute
   AdminAdminOrdersRoute: typeof AdminAdminOrdersRoute
   AdminAdminProductsRoute: typeof AdminAdminProductsRoute
@@ -254,7 +234,6 @@ interface AdminRouteChildren {
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
-  AdminAdminAdminsRoute: AdminAdminAdminsRoute,
   AdminAdminCategoriesRoute: AdminAdminCategoriesRoute,
   AdminAdminOrdersRoute: AdminAdminOrdersRoute,
   AdminAdminProductsRoute: AdminAdminProductsRoute,
